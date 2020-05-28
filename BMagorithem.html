@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>BMagorithem</title>
+</head>
+<body>
+
+	<script>
+		function BM(){
+			var rawS=document.getElementById('input').value;
+			console.log(rawS);
+			var s=rawS.split('');
+			console.log(s);
+			var cd=new Array(100).fill(0);
+			cd[0]=1;
+			var bd=[1];
+			var td=[];
+			var L=0;
+			var m=0;
+			var j=0;
+			var N=s.length;
+			while(j<N){
+				var d=s[j];
+				for (var i = 1; i <=L; i++) {
+					d=d^(cd[i]*s[j-i]);
+				}
+				m++;
+				if (d!=0) {
+					td=[...cd];
+					for (var i = 0; i <=bd.length ; i++) {
+						cd[m+i]=cd[m+i]^bd[i];
+					}
+					cd.index=Math.max(cd.index, bd.index+m);
+					if (L<=j/2) {
+						L=j+1-L;
+						bd=[...td];
+						m=0;
+					}
+				}
+				j++;
+			}
+			var p=document.getElementById('Result');
+			p.innerText=L;
+		}
+		
+	</script>
+		<div id="container">
+	<h3>这是一个用berlekamp-massey算法计算LFSR线性复杂度的网页</h3>
+		<p>Please input binary string</p>
+		<textarea name="in" id="input" cols="100" rows="10"></textarea>
+	  	<input type="submit" value="Get Result" onclick="BM();"/>
+	<div>
+		<h3 id="Result">nothing</h3>
+	</div>
+	</div>
+</body>
+</html>
